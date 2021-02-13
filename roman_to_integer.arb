@@ -17,13 +17,11 @@ def roman_integer(roman_value)
     when roman_value = "I"
         return 1  
     else
-        return 0                                 
-    end 
+        return 0                               
+    end
 end 
   
-def roman_to_number(roman)
-    print "What roman numeral do you want: "
-    roman = gets.chomp    
+def roman_to_number(roman)    
     number = roman_integer(roman[0])
     i = 1
     while i < roman.length        
@@ -32,9 +30,14 @@ def roman_to_number(roman)
         if current_roman <= previous_roman
             number = number + current_roman
         else
+            #Parti pris: 8 == VIII et jamais 8 == IIX
             number = number-(previous_roman*2)+current_roman            
         end
         i += 1
     end    
     puts number  
 end
+
+print "What roman numeral do you want: "
+roman_numeral = gets.chomp
+roman_to_number roman_numeral
