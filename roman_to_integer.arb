@@ -21,11 +21,12 @@ def roman_integer(roman_value)
     end 
 end 
   
-def roman_to_number(roman)    
+def roman_to_number(roman)
+    print "What roman numeral do you want: "
+    roman = gets.chomp    
     number = roman_integer(roman[0])
     i = 1
-    while i < roman.length
-        
+    while i < roman.length        
         current_roman = roman_integer(roman[i])
         previous_roman = roman_integer(roman[i-1])
         if current_roman <= previous_roman
@@ -37,7 +38,3 @@ def roman_to_number(roman)
     end    
     puts number  
 end
-
-print "What roman numeral do you want: "
-roman_numeral = gets.chomp
-roman_to_number roman_numeral

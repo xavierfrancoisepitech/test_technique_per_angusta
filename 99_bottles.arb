@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+
+def song(bottles)
+    i = bottles
+        while i > 0
+            if i > 2
+                a = i
+                b = i -= 1
+                puts "#{a} bottles of beer on the wall, #{a} bottles of beer!
+Take one down, Pass it around, #{b} bottles of beer on the wall!" 
+                puts
+        
+            else
+                a = i
+                b = i -= 1
+                puts "#{a} bottles of beer on the wall, #{a} bottles of beer!
+Take one down, Pass it around, #{b} bottle of beer on the wall!" 
+                puts
+            end              
+        end
+        i = b     
+              
+end 
+
+print "How many bottles on the wall? "
+bottles = gets.chomp.to_i
+song bottles
