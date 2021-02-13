@@ -1,21 +1,77 @@
 #!/usr/bin/ruby
 
+def in_words(int)
+    numbers_to_name = {
+        90 => "ninety",
+        80 => "eighty",
+        70 => "seventy",
+        60 => "sixty",
+        50 => "fifty",
+        40 => "forty",
+        30 => "thirty",
+        20 => "twenty",
+        19=>"nineteen",
+        18=>"eighteen",
+        17=>"seventeen", 
+        16=>"sixteen",
+        15=>"fifteen",
+        14=>"fourteen",
+        13=>"thirteen",              
+        12=>"twelve",
+        11 => "eleven",
+        10 => "ten",
+        9 => "nine",
+        8 => "eight",
+        7 => "seven",
+        6 => "six",
+        5 => "five",
+        4 => "four",
+        3 => "three",
+        2 => "two",
+        1 => "one",
+      }
+    word = ""  
+    numbers_to_name.each do |num, name|
+      if int == 0
+        return word + "no"
+      elsif int.to_s.length == 1 && int/num > 0
+        return word + "#{name}"      
+      elsif int < 100 && int/num > 0
+        return word + "#{name}" if int%num == 0
+        return word + "#{name} " + in_words(int%num)
+      elsif int/num > 0
+        return word + in_words(int/num) + " #{name} " + in_words(int%num)
+      end
+    end
+end
+
 def song(bottles)
     i = bottles
         while i > 0
             if i > 2
                 a = i
                 b = i -= 1
-                puts "#{a} bottles of beer on the wall, #{a} bottles of beer!
-Take one down, Pass it around, #{b} bottles of beer on the wall!" 
+                x = in_words(a)
+                y = in_words(b)
+                puts "#{x.capitalize} bottles of beer on the wall, #{x} bottles of beer!
+Take one down, Pass it around, #{y} bottles of beer on the wall!" 
                 puts
         
-            else
+            elsif i == 2
                 a = i
                 b = i -= 1
-                puts "#{a} bottles of beer on the wall, #{a} bottles of beer!
-Take one down, Pass it around, #{b} bottle of beer on the wall!" 
+                x = in_words(a)
+                y = in_words(b)
+                puts "#{x.capitalize} bottles of beer on the wall, #{x} bottles of beer!
+Take one down, Pass it around, #{y} bottle of beer on the wall!" 
                 puts
+            else 
+                a = i
+                b = i -= 1
+                x = in_words(a)
+                y = in_words(b)
+                puts "#{x.capitalize} bottle of beer on the wall, #{x} bottle of beer!
+Take one down, Pass it around, #{y} bottles of beer on the wall!"     
             end              
         end
         i = b     
@@ -24,4 +80,5 @@ end
 
 print "How many bottles on the wall? "
 bottles = gets.chomp.to_i
+puts
 song bottles
