@@ -31,16 +31,16 @@ def in_words(int)
         1 => "one",
       }
     word = ""  
-    numbers_to_name.each do |num, name|
+    numbers_to_name.each do |index, name|
       if int == 0
         return word + "no"
-      elsif int.to_s.length == 1 && int/num > 0
+      elsif int.to_s.length == 1 && int/index > 0
         return word + "#{name}"      
-      elsif int < 100 && int/num > 0
-        return word + "#{name}" if int%num == 0
-        return word + "#{name} " + in_words(int%num)
-      elsif int/num > 0
-        return word + in_words(int/num) + " #{name} " + in_words(int%num)
+      elsif int < 100 && int/index > 0
+        return word + "#{name}" if int%index == 0
+        return word + "#{name} " + in_words(int%index)
+      elsif int/index > 0
+        return word + in_words(int/index) + " #{name} " + in_words(int%index)
       end
     end
 end
@@ -48,34 +48,23 @@ end
 def song(bottles)
     i = bottles
         while i > 0
-            if i > 2
-                a = i
-                b = i -= 1
-                x = in_words(a)
-                y = in_words(b)
-                puts "#{x.capitalize} bottles of beer on the wall, #{x} bottles of beer!
-Take one down, Pass it around, #{y} bottles of beer on the wall!" 
-                puts
-        
+            if i > 2                
+                puts "#{in_words(i).capitalize} bottles of beer on the wall, #{in_words(i)} bottles of beer!
+Take one down, Pass it around, #{in_words(i-1)} bottles of beer on the wall!" 
+                puts 
+                i -= 1       
             elsif i == 2
-                a = i
-                b = i -= 1
-                x = in_words(a)
-                y = in_words(b)
-                puts "#{x.capitalize} bottles of beer on the wall, #{x} bottles of beer!
-Take one down, Pass it around, #{y} bottle of beer on the wall!" 
+                puts "#{in_words(i).capitalize} bottles of beer on the wall, #{in_words(i)} bottles of beer!
+Take one down, Pass it around, #{in_words(i-1)} bottle of beer on the wall!" 
                 puts
-            else 
-                a = i
-                b = i -= 1
-                x = in_words(a)
-                y = in_words(b)
-                puts "#{x.capitalize} bottle of beer on the wall, #{x} bottle of beer!
-Take one down, Pass it around, #{y} bottles of beer on the wall!"     
+                i -= 1
+            else                
+                puts "#{in_words(i).capitalize} bottle of beer on the wall, #{in_words(i)} bottle of beer!
+Take one down, Pass it around, #{in_words(i-1)} bottles of beer on the wall!" 
+                puts
+                i -= 1
             end              
-        end
-        i = b     
-              
+        end        
 end 
 
 print "How many bottles on the wall? "
