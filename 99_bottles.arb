@@ -1,73 +1,79 @@
 #!/usr/bin/ruby
 
-def in_words(int)
-    numbers_to_name = {
-        90 => "ninety",
-        80 => "eighty",
-        70 => "seventy",
-        60 => "sixty",
-        50 => "fifty",
-        40 => "forty",
-        30 => "thirty",
-        20 => "twenty",
-        19=>"nineteen",
-        18=>"eighteen",
-        17=>"seventeen", 
-        16=>"sixteen",
-        15=>"fifteen",
-        14=>"fourteen",
-        13=>"thirteen",              
-        12=>"twelve",
-        11 => "eleven",
-        10 => "ten",
-        9 => "nine",
-        8 => "eight",
-        7 => "seven",
-        6 => "six",
-        5 => "five",
-        4 => "four",
-        3 => "three",
-        2 => "two",
-        1 => "one",
-      }
-    word = ""  
-    numbers_to_name.each do |index, name|
-      if int == 0
-        return word + "no"
-      elsif int.to_s.length == 1 && int/index > 0
-        return word + "#{name}"      
-      elsif int < 100 && int/index > 0
-        return word + "#{name}" if int%index == 0
-        return word + "#{name} " + in_words(int%index)
-      elsif int/index > 0
-        return word + in_words(int/index) + " #{name} " + in_words(int%index)
+# frozen_string_literal: true
+
+puts 'jij'.frozen?
+
+class BottlesSong
+  NUMBERS_TO_NAME = {
+    90 => "ninety",
+    80 => "eighty",
+    70 => "seventy",
+    60 => "sixty",
+    50 => "fifty",
+    40 => "forty",
+    30 => "thirty",
+    20 => "twenty",
+    19 => "nineteen",
+    18 => "eighteen",
+    17 => "seventeen",
+    16 => "sixteen",
+    15 => "fifteen",
+    14 => "fourteen",
+    13 => "thirteen",
+    12 => "twelve",
+    11 => "eleven",
+    10 => "ten",
+    9  => "nine",
+    8  => "eight",
+    7  => "seven",
+    6  => "six",
+    5  => "five",
+    4  => "four",
+    3  => "three",
+    2  => "two",
+    1  => "one",
+  }.freeze
+
+  attr_reader :bottles_number
+
+  def initialize(bottles_number)
+    @bottles_number = bottles_number
+  end
+
+  def call
+      bottles_number.downto(1) do |remaining_bottles_number|
+        bottle_word_before, bottle_word_after =
+          case remaining_bottles_number
+          when 2
+            %w[bottles bottle]
+          when 1
+            %w[bottle bottles]
+          else
+            %w[bottles bottles]
+          end
+        puts "#{in_words(remaining_bottles_number).capitalize} #{bottle_word_before} of beer on the wall, #{in_words(remaining_bottles_number)} #{bottle_word_before} of beer!\nTake one down, Pass it around, #{in_words(remaining_bottles_number-1)} #{bottle_word_after} of beer on the wall!"
+        puts
       end
+  end
+
+  private
+
+  def in_words(int)
+    case int
+    when 0
+      'no'
+    when 1..20
+      NUMBERS_TO_NAME[int]
+    when 21..99
+      "#{NUMBERS_TO_NAME[int / 10 * 10]} #{NUMBERS_TO_NAME[int % 10]}".strip
+    else
+      raise "#{int} must be between 0 and 99!"
     end
+  end
 end
 
-def song(bottles)
-    i = bottles
-        while i > 0
-            if i > 2                
-                puts "#{in_words(i).capitalize} bottles of beer on the wall, #{in_words(i)} bottles of beer!
-Take one down, Pass it around, #{in_words(i-1)} bottles of beer on the wall!" 
-                puts 
-                i -= 1       
-            elsif i == 2
-                puts "#{in_words(i).capitalize} bottles of beer on the wall, #{in_words(i)} bottles of beer!
-Take one down, Pass it around, #{in_words(i-1)} bottle of beer on the wall!" 
-                puts
-                i -= 1
-            else                
-                puts "#{in_words(i).capitalize} bottle of beer on the wall, #{in_words(i)} bottle of beer!
-Take one down, Pass it around, #{in_words(i-1)} bottles of beer on the wall!" 
-                puts
-                i -= 1
-            end              
-        end        
-end 
-
 print "How many bottles on the wall? "
-bottles = gets.chomp.to_i
+bottles_number = gets.chomp.to_i
 puts
-song bottles
+BottlesSong.new(bottles_number).call
